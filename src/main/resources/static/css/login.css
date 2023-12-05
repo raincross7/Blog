@@ -1,0 +1,35 @@
+* {
+  font-family: 'Tilt Neon', sans-serif;
+}
+body {
+  background-color: #282c34;
+}
+
+#center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  margin-top: 200px;
+}
+form button {
+  width: 26vw; height: 50px;
+  margin-top: 10px;
+}
+.mb-3 label {
+  color: beige;
+  font-size: 45px;
+}
+.mb-3 input {
+  width: 26vw;
+}
+
+a {
+  display: block;
+}
+a button {
+  width: 26vw; height: 50px;
+  margin-top: 10px;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <style>@import url('https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap');</style>
+  <link rel="stylesheet" th:href="@{/css/board.css}">
+  <script defer src="/js/board.js"></script>
+  <title>Main</title>
+</head>
+<body>
+  <div id="center">
+    <div th:if="${session.user}!=null">
+      <span th:text="${session.user.userId}+'님 반갑습니다'"></span>
+      <div class="btn-group" aria-label="accountControl">
+        <a href="/blog/logout"><button type="button" class="btn btn-secondary">로그아웃</button></a>
+        <a href="/blog/edit"><button type="button" class="btn btn-secondary">회원정보수정</button></a>
+        <a href="/blog/withdraw" onclick="return confirmWithdraw()"><button type="button" class="btn btn-secondary">회원탈퇴</button></a>
+      </div>
+    </div>
+    <div th:unless="${session.user}!=null">
+      <span>로그인되어있지 않습니다</span>
+      <div class="btn-group">
+        <a href="/blog"><button type="button" class="btn btn-secondary">로그인</button></a>
+      </div>
+    </div>
+  </div>
+  <div id="center">
+    <table>
+      <tr>
+        <th>글번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>조회</th>
+      </tr>
+      <tr th:each="content: ${contents}">
+        <td th:text="${content.postNumber}"></td>
+        <td th:if="${session.user}!=null"><a th:href="@{'/blog/board/'+${content.postNumber}}" th:text="${content.title}"></a></td>
+        <td th:unless="${session.user}!=null" th:text="${content.title}"></td>
+        <td th:text="${content.account.userId}"></td>
+        <td th:text="${content.creationDate}"></td>
+        <td th:text="${content.viewCount}"></td>
+      </tr>
+    </table>
+  </div>
+  <div id="center">
+    <form action="/blog/board/search" method="get" style="display: flex;">
+      <select class="form-select form-select-sm" style="width: 77px; height: 30px;" aria-label="typeSelector" name="type">
+        <option value="title" selected>제목</option>
+        <option value="content">내용</option>
+      </select>
+      <div class="mb-3">
+        <input id="searching" class="form-control" style="width: 200px; height: 30px;" type="text" name="search">
+      </div>
+      <button class="btn btn-dark" style="width: 70px; height: 30px; font-size: 14px; font-weight: bold;" type="submit">검색</button>
+    </form>
+    <a th:if="${session.user}!=null" href="/blog/board/write"><button class="btn btn-dark" style="width: 70px; height: 30px; font-size: 14px; font-weight: bold; margin-bottom: 16px;">글작성</button></a>
+  </div>
+</body>
+</html>

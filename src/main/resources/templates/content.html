@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+  <style>@import url('https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap');</style>
+  <link rel="stylesheet" th:href="@{/css/content.css}">
+  <script defer src="/js/content.js"></script>
+  <title>Content</title>
+</head>
+<body>
+  <div id="center">
+    <table id="content">
+      <tr>
+        <th>제목</th><td th:text="${content.title}" colspan="5"></td>
+      </tr>
+      <tr>
+        <th>아이디</th><td th:text="${content.account.userId}"></td>
+        <th>작성일</th><td style="text-align: right;" th:text="${content.creationDate}"></td>
+        <th>조회</th><td style="text-align: right;" th:text="${content.viewCount}"></td>
+      </tr>
+      <tr>
+        <th>첨부</th>
+          <td th:if="${files}!=null" colspan="5">
+            <div th:each="file: ${files}">
+              <a th:href="@{'/blog/board/'+${content.postNumber}+'/'+${file.uid}+'_'+${file.fileName}}" th:text="${file.fileName}"></a>
+              <a th:if="${session.user.userId}==${content.account.userId}" th:href="@{'/blog/board/'+${content.postNumber}+'/'+${file.fileName}+'_'+${file.uid}+'/delete'}" onclick="return confirmDelete()">
+                <button style="background: none; border: none"><img src="/icon/TrashCan.png" style="width: 40px; height: 40px;"></button>
+              </a><br>
+            </div>
+          </td>
+        <td th:unless="${files}!=null" colspan="5">&nbsp;</td>
+      </tr>
+      <tr>
+        <td th:text="${content.content}" colspan="6"></td>
+      </tr>
+    </table>
+  </div>
+  <div id="center">
+    <table id="comment">
+      <tr th:each="comment: ${comments}">
+        <td th:text="${comment.account.userId}"></td>
+        <td th:text="${comment.content}"></td>
+        <td th:text="${comment.creationDate}"></td>
+        <td style="border: none;">
+          <a th:if="${session.user.userId}==${comment.account.userId}" th:href="@{'/blog/board/'+${content.postNumber}+'/'+${comment.commNumber}}" onclick="return confirmDelete()">
+            <button style="background: none; border: none"><img src="/icon/TrashCan.png" style="width: 40px; height: 40px;"></button>
+          </a> 
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div id="center">
+    <form action="/blog/board/commWrite" enctype="multipart/form-data" method="post">
+      <div class="mb-3">
+        <textarea id="input-com" class="form-control" style="resize: none;" rows="4" cols="145" name="content" required></textarea>
+      </div>
+      <input type="hidden" name="postNumber" th:value=${content.postNumber}>
+      <button class="btn btn-warning" style="font-weight: bold; margin-left: 1130px;" type="submit">댓글작성</button>
+    </form>
+  </div>
+  <div id="center">
+    <div id="center" th:if="${session.user.userId}==${content.account.userId}">
+      <form action="/blog/board/rewrite" method="get">
+        <button class="btn btn-warning" style="font-weight: bold; margin-top: 10px; margin-right: 10px; font-size: 25px;" type="submit" name="rewrite" th:value="${content.postNumber}">수정</button>
+      </form>
+      <form action="/blog/board/delete" method="get" onsubmit="return confirmDelete()">
+        <button class="btn btn-warning" style="font-weight: bold; margin-top: 10px; margin-left: 10px; font-size: 25px;" type="submit" name="delete" th:value="${content.postNumber}">삭제</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

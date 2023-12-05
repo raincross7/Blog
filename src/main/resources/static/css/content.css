@@ -1,0 +1,44 @@
+* {
+  font-family: 'Tilt Neon', sans-serif;
+}
+body {
+  background-color: #282c34;
+}
+
+#center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#content {
+  width: 60vw;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin-top: 200px;
+}
+#content th {
+  border: 2px solid lightgray;
+  text-align: center;
+  padding: 8px;
+}
+#content td {
+  border: 2px solid lightgray;
+  padding: 8px;
+}
+#comment {
+  width: 60vw;
+  font-size: calc(6px + 2vmin);
+  color: white;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+#comment th {
+  border: 1px dotted lightgray;
+  text-align: center;
+  padding: 8px;
+}
+#comment td {
+  border: 1px dotted lightgray;
+  padding: 8px;
+}

@@ -1,0 +1,24 @@
+* {
+  font-family: 'Tilt Neon', sans-serif;
+}
+body {
+  background-color: #282c34;
+}
+
+#center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  width: 46vw;
+  margin-top: 180px;
+}
+label {
+  color: beige;
+  font-weight: bold;
+}
+button {
+ width: 46vw; 
+}
