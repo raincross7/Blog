@@ -1,4 +1,4 @@
-# Blog
+# blog
 SpringBoot를 사용한 블로그 제작
 
 📖**Skills**
