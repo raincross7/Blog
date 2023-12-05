@@ -48,10 +48,10 @@ VALUES
 ('1a79a4d6-0de6-318e-8e5b-326e338ae533', 'second.png', 'eve91', 3, '2023-11-05');
 
 CREATE TABLE comment (
-	comm_number INT AUTO_INCREMENT PRIMARY KEY,
-	user_id VARCHAR(20) NOT NULL,
-	content TEXT NOT NULL,
-	post_number INT NOT NULL,
+	comm_number   INT AUTO_INCREMENT PRIMARY KEY,
+	user_id       VARCHAR(20) NOT NULL,
+	content       TEXT NOT NULL,
+	post_number   INT NOT NULL,
 	creation_date VARCHAR(15) NOT NULL,
 	
 	CONSTRAINT user_id_pk_comment FOREIGN KEY(user_id) REFERENCES account(user_id) ON DELETE CASCADE,
